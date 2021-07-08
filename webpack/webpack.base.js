@@ -21,7 +21,7 @@ module.exports = {
      * 路径，特别恶心，
      */
     alias: {
-      '@src': path.join(__dirname, '../', 'app/renderer'),
+      '@src': path.join(__dirname, '../', 'app/src'),
     },
   },
   module: {
