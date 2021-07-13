@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { shell } from 'electron';
 import { AuditOutlined, SmileOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import quarterMap, { weekMap } from './map';
@@ -12,7 +14,14 @@ const quarterOfYear = require('dayjs/plugin/quarterOfYear');
  */
 const Banner = () => {
   const [Position, setPosition] = useState('');
+  /**
+   * dayjs继承季节插件
+   */
   dayjs.extend(quarterOfYear);
+  /**
+   * 路由
+   */
+  const history = useHistory()
   /**
    * 标题滑动样式，但是效果不怎么好
    */
@@ -26,6 +35,19 @@ const Banner = () => {
       }
     });
   };
+
+  const clickHandle = (t: string) => {
+    switch (t) {
+      case '介绍':
+        shell.beep()
+        break;
+      case '简历':
+        history.push('/resume');
+        break;
+      default:
+        shell.openExternal('https://github.com/ruizexiangqianchong/Electron-Resume')
+    }
+  }
   useEffect(() => {
     // setTitle();
   }, []);
@@ -38,7 +60,7 @@ const Banner = () => {
         className="top-banner-bg"
         style={{
           backgroundImage: `url(${quarterMap.get(
-            (dayjs().subtract(8, 'M') as any).quarter() || 1
+            (dayjs().subtract(2, 'M') as any).quarter() || 1
           )})`,
           backgroundPosition: Position,
         }}
@@ -56,8 +78,17 @@ const Banner = () => {
             由孙瑞泽制作，仅供学习使用
           </span>
         </div>
+        <div className="top-banner-content-button">
+          {
+            ['介绍', '简历', '源码'].map((t: string) => (
+              <div className="button-item" key={t} onClick={() => { clickHandle(t) }}>{t}</div>
+            ))
+          }
+        </div>
       </div>
-      <div style={{ height: '200vh' }}></div>
+      <div className="top-banner-bottom">
+        <div className="bottom-text">Copyright © 2018-{dayjs().format("YYYY")} All Rights Reserved. Copyright By sunruize</div>
+      </div>
     </div>
   );
 };
