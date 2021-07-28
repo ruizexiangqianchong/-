@@ -22,6 +22,8 @@ module.exports = {
      */
     alias: {
       '@src': path.join(__dirname, '../', 'app/src'),
+      '@renderer': path.join(__dirname, '../', 'app/renderer'),
+      '@coomon': path.join(__dirname, '../', 'app/src/coomon'),
     },
   },
   module: {

@@ -4,6 +4,7 @@ import { shell } from 'electron';
 import { AuditOutlined, SmileOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import quarterMap, { weekMap } from './map';
+import { ROUTER_ROOT_ARRAY } from '@src/coomon/constants/router';
 import './style.scss';
 
 const quarterOfYear = require('dayjs/plugin/quarterOfYear');
@@ -21,7 +22,7 @@ const Banner = () => {
   /**
    * 路由
    */
-  const history = useHistory()
+  const history = useHistory();
   /**
    * 标题滑动样式，但是效果不怎么好
    */
@@ -36,18 +37,18 @@ const Banner = () => {
     });
   };
 
-  const clickHandle = (t: string) => {
+  const clickHandle = (t: string, url: string) => {
     switch (t) {
       case '介绍':
-        shell.beep()
+        shell.beep();
         break;
       case '简历':
-        history.push('/resume');
+        history.push(url);
         break;
       default:
-        shell.openExternal('https://github.com/ruizexiangqianchong/Electron-Resume')
+        shell.openExternal(url);
     }
-  }
+  };
   useEffect(() => {
     // setTitle();
   }, []);
@@ -60,7 +61,7 @@ const Banner = () => {
         className="top-banner-bg"
         style={{
           backgroundImage: `url(${quarterMap.get(
-            (dayjs().subtract(2, 'M') as any).quarter() || 1
+              (dayjs().subtract(2, 'M') as any).quarter() || 1
           )})`,
           backgroundPosition: Position,
         }}
@@ -79,15 +80,24 @@ const Banner = () => {
           </span>
         </div>
         <div className="top-banner-content-button">
-          {
-            ['介绍', '简历', '源码'].map((t: string) => (
-              <div className="button-item" key={t} onClick={() => { clickHandle(t) }}>{t}</div>
-            ))
-          }
+          {ROUTER_ROOT_ARRAY.map((t) => (
+            <div
+              className="button-item"
+              key={t.key}
+              onClick={() => {
+                clickHandle(t.text, t.url);
+              }}
+            >
+              {t.text}
+            </div>
+          ))}
         </div>
       </div>
       <div className="top-banner-bottom">
-        <div className="bottom-text">Copyright © 2018-{dayjs().format("YYYY")} All Rights Reserved. Copyright By sunruize</div>
+        <div className="bottom-text">
+          Copyright © 2018-{dayjs().format('YYYY')} All Rights Reserved.
+          Copyright By sunruize
+        </div>
       </div>
     </div>
   );
