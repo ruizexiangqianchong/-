@@ -2,7 +2,19 @@
  * @desc electron 主入口
  */
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+const ROOT_PATH = path.join(app.getAppPath(), '../');
+
+/**
+ * 当主进程接受到来自渲染进程的case时触发
+ */
+ipcMain.on('get-root-path', (evt) => {
+  /**
+   * 向渲染进程发送异步回调
+   */
+  evt.reply('reply-root-path', ROOT_PATH);
+});
 
 /**
  *

@@ -32,4 +32,4 @@ module.exports = {
     // 函数的括号前要有空格
     'space-before-function-paren': 0,
   },
-};
+}

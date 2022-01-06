@@ -12,7 +12,7 @@ import './style.scss';
 function App(): JSX.Element {
   return (
     <Provider store={store}>
-      <Router />;
+      <Router />
     </Provider>
   );
 }
