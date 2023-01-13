@@ -10,11 +10,11 @@ import './style.scss';
  * @return  {Promise<JSX.Element>}
  */
 function App(): JSX.Element {
-  return (
-    <Provider store={store}>
-      <Router />
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <Router />
+        </Provider>
+    );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
